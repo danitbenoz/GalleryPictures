@@ -1,0 +1,27 @@
+body {
+    background: #000;
+    margin: 18px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-gap: 10px; /* Space between grid items */
+}
+
+img {
+    width: 100%; /* Full width of the grid cell */
+    display: block;
+    padding: 5px 0px;
+    border-radius: 20px;
+    transition: transform 0.2s;
+}
+
+img:hover {
+    filter: opacity(.9);
+    transform: scale(1.01);
+}
+
+.react-datepicker{
+    background-color: aqua;
+}
