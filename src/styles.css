@@ -21,7 +21,3 @@ img:hover {
     filter: opacity(.9);
     transform: scale(1.01);
 }
-
-.react-datepicker{
-    background-color: aqua;
-}
