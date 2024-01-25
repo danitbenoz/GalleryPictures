@@ -5,12 +5,12 @@ body {
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    grid-gap: 10px; /* Space between grid items */
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 10px;
 }
 
 img {
-    width: 100%; /* Full width of the grid cell */
+    width: 100%; 
     display: block;
     padding: 5px 0px;
     border-radius: 20px;
@@ -21,3 +21,8 @@ img:hover {
     filter: opacity(.9);
     transform: scale(1.01);
 }
+
+
+
+
+

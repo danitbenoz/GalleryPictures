@@ -1,0 +1,17 @@
+{
+    "short_name": "Gallery",
+    "name": "Image Gallery",
+    "description": "A gallery of beautiful images",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "icons": [
+      {
+        "src": "/icon-gallery.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
+  

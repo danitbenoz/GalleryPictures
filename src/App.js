@@ -13,7 +13,7 @@ function App() {
     return (
         <div className="App">
             <CustomDatePicker selectedDate={selectedDate} handleDateChange={handleDateChange} />
-            <Gallery key={selectedDate.toISOString()} /> {/* Key prop to force re-render */}
+            <Gallery key={selectedDate.toISOString()} />
         </div>
     );
 }
