@@ -1,7 +1,7 @@
 # Image Gallery Project
 
 ## Description
-This project is an image gallery application built with [React](https://reactjs.org/). It features an infinite scrolling gallery, dynamically loading images as the user scrolls. The project demonstrates the use of React hooks, axios for fetching data, and the IntersectionObserver API for efficient, on-demand loading of images.
+This project is an image gallery application built with [React](https://reactjs.org/). It features an infinite scrolling gallery, dynamically loading images as the user scrolls. 
 
 ## Features
 - Infinite scrolling to continuously load new images
