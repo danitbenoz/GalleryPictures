@@ -1,4 +1,4 @@
-# Image Gallery Project
+# Images Gallery Project
 
 ## Description
 This project is an image gallery application built with [React](https://reactjs.org/). It features an infinite scrolling gallery, dynamically loading images as the user scrolls. 
