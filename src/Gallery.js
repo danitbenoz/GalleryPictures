@@ -1,28 +1,24 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
-import './styles.css'
+import './styles.css';
 
 const GalleryImage = ({ src, alt }) => {
     const [inView, setInView] = useState(false);
     const imgRef = useRef();
 
     useEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setInView(true);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+        const imgElement = imgRef.current;
+        const loadListener = () => {
+            setInView(true);
+        };
 
-        if (imgRef.current) {
-            observer.observe(imgRef.current);
+        if (imgElement) {
+            imgElement.addEventListener('load', loadListener);
         }
 
         return () => {
-            if (imgRef.current) {
-                observer.unobserve(imgRef.current);
+            if (imgElement) {
+                imgElement.removeEventListener('load', loadListener);
             }
         };
     }, []);
@@ -37,28 +33,32 @@ const GalleryImage = ({ src, alt }) => {
     );
 };
 
-
 const Gallery = ({ selectedDate }) => {
     const [images, setImages] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const observer = useRef();
+    const loadingMore = useRef(false); // To prevent concurrent requests
 
     const loadMoreImages = useCallback(() => {
-        if (!hasMore) return;
+        if (!hasMore || loadingMore.current) return;
+        loadingMore.current = true;
         setPage(prevPage => prevPage + 1);
-    }, [hasMore]); 
+    }, [hasMore]);
 
     useEffect(() => {
-        const randomPage = Math.floor(Math.random() * 100) + 1; 
+        const randomPage = Math.floor(Math.random() * 100) + 1;
+        console.log(randomPage);
         setImages([]);
         setPage(randomPage);
         setHasMore(true);
     }, [selectedDate]);
 
     useEffect(() => {
-        axios.get(`https://picsum.photos/v2/list?page=${page}&limit=30`) 
+        axios
+            .get(`https://picsum.photos/v2/list?page=${page}&limit=30`)
             .then(response => {
+                loadingMore.current = false;
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {
@@ -67,6 +67,7 @@ const Gallery = ({ selectedDate }) => {
             })
             .catch(error => {
                 console.error('Error fetching images:', error);
+                loadingMore.current = false; // Ensure it's reset on error
             });
     }, [page]);
 
@@ -79,17 +80,21 @@ const Gallery = ({ selectedDate }) => {
                 loadMoreImages();
             }
         };
-        observer.current = new IntersectionObserver(callback);
+        observer.current = new IntersectionObserver(callback, {
+            rootMargin: '200px', // Adjust as needed
+        });
         if (document.querySelector('.gallery img:last-child')) {
             observer.current.observe(document.querySelector('.gallery img:last-child'));
         }
-    }, [images, hasMore, loadMoreImages]); 
+    }, [images, hasMore, loadMoreImages]);
 
     return (
         <div className="gallery">
-            {images.map(image => (
-                <GalleryImage key={image.id} src={image.download_url} alt={image.author} />
-            ))}
+        {images.map((image, index) => (
+            <GalleryImage key={index} src={image.download_url} alt={image.author} />
+        ))}
+
+
         </div>
     );
 };
