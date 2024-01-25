@@ -6,7 +6,7 @@ This project is an image gallery application built with [React](https://reactjs.
 ## Features
 - Infinite scrolling to continuously load new images
 - Responsive design for optimal viewing on all device sizes
-- Randomized image loading for a unique experience on each visit
+- Randomized image loading for different dates.
 - Elegant and minimalistic user interface
 
 ## Getting Started
