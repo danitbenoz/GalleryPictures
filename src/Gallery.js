@@ -1,5 +1,42 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
+import './styles.css'
+
+const GalleryImage = ({ src, alt }) => {
+    const [inView, setInView] = useState(false);
+    const imgRef = useRef();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        if (imgRef.current) {
+            observer.observe(imgRef.current);
+        }
+
+        return () => {
+            if (imgRef.current) {
+                observer.unobserve(imgRef.current);
+            }
+        };
+    }, []);
+
+    return (
+        <img
+            ref={imgRef}
+            src={src}
+            alt={alt}
+            className={inView ? 'fade-in' : ''}
+        />
+    );
+};
+
 
 const Gallery = ({ selectedDate }) => {
     const [images, setImages] = useState([]);
@@ -51,7 +88,7 @@ const Gallery = ({ selectedDate }) => {
     return (
         <div className="gallery">
             {images.map(image => (
-                <img key={image.id} src={image.download_url} alt={image.author} />
+                <GalleryImage key={image.id} src={image.download_url} alt={image.author} />
             ))}
         </div>
     );
